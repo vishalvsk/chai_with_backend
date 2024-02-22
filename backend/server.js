@@ -13,14 +13,23 @@ const jokes = [
   { id: 9, name: "Object 9", content: "Content of Object 9" },
   { id: 10, name: "Object 10", content: "Content of Object 10" },
 ];
+// app.get("/login", (req, res) => {
+//   res.send({ message: "server is on running", id: req.body.id });
+// });
 
-app.get("/jokes", (req, res) => {
-  res.send(jokes);
+app.use(express.json());
+
+app.get("/jokes/:name", (req, res) => {
+  const name = req.params.name;
+  console.log(name);
+  const filterJoke = jokes.filter((joke) => joke.name === name);
+  res.json(filterJoke);
+  // res.send({ id: req.body });
 });
 
-app.get("/", (req, res) => {
-  res.send('the server is ready');
-});
+// app.get("/", (req, res) => {
+//   res.send("the server is ready");
+// });
 
 const port = process.env.PORT || 3000;
 app.listen(port, () => {
